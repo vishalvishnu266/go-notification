@@ -6,6 +6,6 @@ import (
 
 func Health(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"message": "dead",
+		"message": "Hey I am alive :-)",
 	})
 }

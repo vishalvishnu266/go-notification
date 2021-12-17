@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
+	"github.com/growmax/noti/db"
 	"github.com/growmax/noti/router"
+	// "github.com/growmax/noti/service"
 	"github.com/joho/godotenv"
 )
 
@@ -14,10 +15,14 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
-	password := os.Getenv("PASSWORD")
-	fmt.Print(password)
+	_, err = db.GetMongoClient()
+	if err != nil {
+		log.Printf("Error while connecting to MongoDB")
+	} else {
+		log.Printf("connected to mongodb successfully!!!!!!!!!!!!")
+	}
+	// service.ReceiveFromKafka()
 	r := router.SetupRouter()
-	fmt.Print()
-	r.Run("localhost:3000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	port := os.Getenv("PORT")
+	r.Run(port)
 }
