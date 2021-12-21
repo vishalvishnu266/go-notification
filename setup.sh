@@ -14,11 +14,12 @@
 # go mod init github.com/growmax/noti 
 
 # go get -u github.com/gin-gonic/gin
+# go get github.com/gin-contrib/cors
 # go get -u google.golang.org/grpc
 # go get github.com/joho/godotenv
 # go get go.mongodb.org/mongo-driver/mongo
 # go get -u github.com/SherClockHolmes/webpush-go
-# go get -u gopkg.in/confluentinc/confluent-kafka-go.v1/kafka
+# go get -u github.com/segmentio/kafka-go
 # go get -u github.com/golang-jwt/jwt
 # wget https://raw.githubusercontent.com/centrifugal/centrifugo/master/internal/apiproto/api.proto -O centrifugo.proto
 # protoc -I ./ centrifugo.proto --go_out=. --go-grpc_out=.

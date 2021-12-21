@@ -2,36 +2,38 @@ package db
 
 import (
 	"context"
+	// "time"
 
 	"github.com/growmax/noti/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func AddBrowser(browser model.Browser) error {
+func AddNotification(notification model.Notification) error {
 	client, err := GetMongoClient()
 	if err != nil {
 		return err
 	}
-	collection := client.Database(DB).Collection("browser")
-	_, err = collection.InsertOne(context.TODO(), browser)
+	collection := client.Database(DB).Collection("notification")
+	_, err = collection.InsertOne(context.TODO(), notification)
 	if err != nil {
 		return err
 	}
+	//Return success without any error.
 	return nil
 }
 
-func GetBrowser(user string, page int) ([]model.Browser, error) {
-	var browsers []model.Browser
+func GetNotification(user string, page int) ([]model.Notification, error) {
+	var notifications []model.Notification
 	client, err := GetMongoClient()
 	if err != nil {
-		return browsers, err
+		return notifications, err
 	}
 	//Create a handle to the respective collection in the database.
-	collection := client.Database(DB).Collection("browser")
+	collection := client.Database(DB).Collection("notification")
 	filter := bson.M{"user": user}
 	findOptions := options.Find()
-	var perPage int64 = 3
+	var perPage int64 = 10
 	// ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	ctx := context.TODO()
 
@@ -45,9 +47,9 @@ func GetBrowser(user string, page int) ([]model.Browser, error) {
 	defer cursor.Close(ctx)
 
 	for cursor.Next(ctx) {
-		var browser model.Browser
-		cursor.Decode(&browser)
-		browsers = append(browsers, browser)
+		var notification model.Notification
+		cursor.Decode(&notification)
+		notifications = append(notifications, notification)
 	}
-	return browsers, nil
+	return notifications, nil
 }

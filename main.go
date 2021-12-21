@@ -5,8 +5,12 @@ import (
 	"os"
 
 	"github.com/growmax/noti/db"
-	"github.com/growmax/noti/router"
+	"github.com/growmax/noti/kafkaservice"
+	// "github.com/growmax/noti/model"
 	// "github.com/growmax/noti/service"
+
+	// "github.com/growmax/noti/model"
+	"github.com/growmax/noti/router"
 	"github.com/joho/godotenv"
 )
 
@@ -21,7 +25,7 @@ func main() {
 	} else {
 		log.Printf("connected to mongodb successfully!!!!!!!!!!!!")
 	}
-	// service.ReceiveFromKafka()
+	go kafkaservice.ReceiveFromKafka()
 	r := router.SetupRouter()
 	port := os.Getenv("PORT")
 	r.Run(port)

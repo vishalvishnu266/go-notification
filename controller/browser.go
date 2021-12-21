@@ -2,37 +2,31 @@ package controller
 
 import (
 	"encoding/json"
-	"log"
-	"strings"
-
 	webpush "github.com/SherClockHolmes/webpush-go"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"github.com/growmax/noti/db"
 	"github.com/growmax/noti/model"
+	"strings"
+	"time"
 )
 
 type Browser struct {
-	// User       string `form:"user"`
 	BrowserEnd string `form:"browser"`
 }
 
 func AddBrowser(c *gin.Context) {
 	tokenString := strings.Split(c.Request.Header["Authorization"][0], " ")[1]
-	//#####################3
 	token, _, err := new(jwt.Parser).ParseUnverified(tokenString, jwt.MapClaims{})
 	if err != nil {
 		c.String(500, "internal error")
 		return
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
-	if ok {
-		log.Println(claims["sub"])
-	} else {
+	if !ok {
 		c.String(500, "internal error")
 		return
 	}
-	//##############################################
 	var b Browser
 	s := webpush.Subscription{}
 	if c.ShouldBindQuery(&b) == nil {
@@ -44,7 +38,8 @@ func AddBrowser(c *gin.Context) {
 	}
 	var broAdd model.Browser
 	broAdd.User = claims["sub"].(string)
-	broAdd.Browser = s
+	broAdd.Browser = b.BrowserEnd
+	broAdd.CreatedAt = time.Now()
 	err = db.AddBrowser(broAdd)
 	if err != nil {
 		c.String(500, "internal error")

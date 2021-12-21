@@ -2,24 +2,21 @@ package service
 
 import (
 	"encoding/json"
-	"os"
-
 	webpush "github.com/SherClockHolmes/webpush-go"
+	"os"
 )
 
-func notification(subscription string, message string) (string, error) {
-
+func SendWebpush(subscription string, message string) {
 	vapidPublicKey := os.Getenv("VAPIDPUBLIC")
 	vapidPrivateKey := os.Getenv("VAPIDPRIVATE")
 	s := webpush.Subscription{}
-
 	json.Unmarshal([]byte(subscription), &s)
-	resp, err := webpush.SendNotification([]byte(message), &s, &webpush.Options{
-		Subscriber:      "example@example.com", // Do not include "mailto:"
+	resp, _ := webpush.SendNotification([]byte(message), &s, &webpush.Options{
+		Subscriber:      "admin@growmax.com", // Do not include "mailto:"
 		VAPIDPublicKey:  vapidPublicKey,
 		VAPIDPrivateKey: vapidPrivateKey,
 		TTL:             30,
 	})
 	defer resp.Body.Close()
-	return resp.Status, err
+	// return resp.Status, err
 }
