@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"github.com/growmax/noti/db"
-	"github.com/growmax/noti/model"
+	// "github.com/growmax/noti/model"
 	"strings"
 )
 
@@ -20,10 +20,6 @@ func GetRecieverOption(c *gin.Context) {
 		c.String(500, "internal error")
 		return
 	}
-	db.AddRecieverOption(model.RecieverOption{
-		User:    claims["sub"].(string),
-		Webpush: false,
-	})
 	option, err := db.GetRecieverOption(claims["sub"].(string))
 	if err != nil {
 		c.String(500, "mongo error")
