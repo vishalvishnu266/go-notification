@@ -14,6 +14,7 @@ func SetupRouter() *gin.Engine {
 	r.POST("/push/getnotification", controller.GetNotification)
 	r.POST("/push/addBrowser", controller.AddBrowser)
 	r.GET("/push/getjwt", controller.GetJwt)
+	r.POST("/push/createuser", controller.CreateUser)
 	r.GET("/push/getrecieveroption", controller.GetRecieverOption)
 	r.PUT("/push/enablewebpush", controller.EnableWebpush)
 	r.PUT("/push/enableemail", controller.EnableEmail)
