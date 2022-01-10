@@ -2,7 +2,7 @@
 
 ## Used 
 * Apache kafka
-* gRPC
+* gRPC & PROTOBUF
 * MongoDB
 * restapi
 * websocket(https://github.com/centrifugal/centrifugo)
