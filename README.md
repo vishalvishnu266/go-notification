@@ -7,3 +7,5 @@
 * restapi
 * websocket(https://github.com/centrifugal/centrifugo)
 * redis
+* Docker 
+* Kubernetes
